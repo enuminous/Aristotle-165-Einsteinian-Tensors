@@ -1,5 +1,18 @@
 # Aristotle 165 — Einsteinian Tensor Atlas
 
+<!-- ENUMINOUS-NETWORK:START -->
+**eNuminous network:** [All repositories](https://enuminous.github.io/EFMW/repositories.html) · [EFMW](https://enuminous.github.io/EFMW/) · [102 equations](https://github.com/enuminous/Monolithic_102_EFMW) · [165 triplets](https://enuminous.github.io/FieldSpace/) · [Zoo](https://enuminous.github.io/Tortoise/) · [Lean](https://enuminous.github.io/Aristotle-102-Monolithic-Lean/) · [Engine](https://enuminous.github.io/Archimedes-Engine/) · [Papers](https://enuminous.github.io/medium/papers-essays-index.html) · [Audit](https://github.com/enuminous/EFMW_Post156_Zoo_Audit/blob/main/portfolio/INTERLOCK_AUDIT.md)
+
+[Repository](https://github.com/enuminous/Aristotle-165-Einsteinian-Tensors) · [Published page](https://enuminous.github.io/Aristotle-165-Einsteinian-Tensors/)
+
+<details>
+<summary>Repository indexes (1)</summary>
+
+- [index.html](https://github.com/enuminous/Aristotle-165-Einsteinian-Tensors/blob/main/index.html) · [Open page](https://enuminous.github.io/Aristotle-165-Einsteinian-Tensors/index.html)
+
+</details>
+<!-- ENUMINOUS-NETWORK:END -->
+
 This repository formalizes a finite three-sector atlas built from eleven sector labels. It contains Lean proofs of combinatorial properties and a small scalar-coupling algebra model. The dashboard in [`index.html`](index.html) expands all 165 triplets and offers an interactive residual calculator for that scalar model.
 
 > **Scope:** this is not a complete physical equation solver. The repository does not include the full field-equation source, tensor components, units, boundary conditions, or numerical data needed to solve a physical system. The dashboard's “solver” evaluates the scalar residual defined in `Coupling.lean`; it does not solve Einstein or matter field equations.
