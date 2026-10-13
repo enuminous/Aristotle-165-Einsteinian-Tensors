@@ -19,3 +19,8 @@ Native proof evaluation is rejected. The existing finite enumeration statements 
 The successful job summary records the exact commit and workflow run. Source
 declarations and hypotheses determine the mathematical scope; a successful
 build does not validate a broader empirical or scientific interpretation.
+
+The finite overlap proof sums 165 small fibers instead of reducing a materialized
+27,060-pair product. The project library sets Lean's thread stack to 64 MiB via
+`-s65536` for the pinned 4.28 toolchain; this addresses an observed stack overflow
+without changing the statements, toolchain, dependencies, or permitted axioms.
