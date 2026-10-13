@@ -29,8 +29,8 @@ private theorem overlap_row (a : Finset Sector) (ha : a ∈ triplets)
           exact Finset.mem_sdiff.mpr ⟨Finset.mem_univ x, (Finset.mem_sdiff.mp hx).2⟩
         · rw [Finset.card_sdiff, hb3, hi]
     · intro b hb c hc h
-      have hi := congrArg Prod.fst h
-      have hd := congrArg Prod.snd h
+      have hi : a ∩ b = a ∩ c := congrArg Prod.fst h
+      have hd : b \ a = c \ a := congrArg Prod.snd h
       have hrec (b : Finset Sector) : (b \ a) ∪ (a ∩ b) = b := by
         rw [Finset.inter_comm, Finset.sdiff_union_inter]
       calc
@@ -94,9 +94,13 @@ private theorem overlap_count (k count : ℕ)
   calc
     _ = ∑ a ∈ triplets,
         (triplets.filter (fun b => a ≠ b ∧ (a ∩ b).card = k)).card := by
-      simp [hoff, Finset.filter_filter, Finset.card_eq_sum_ones,
+      simp only [hoff, Finset.filter_filter, Finset.card_eq_sum_ones,
         Finset.sum_filter, Finset.sum_product]
-    _ = triplets.card * count := by simp [hrow]
+    _ = ∑ _a ∈ triplets, count := by
+      apply Finset.sum_congr rfl
+      intro a ha
+      exact hrow a ha
+    _ = triplets.card * count := by simp
     _ = 165 * count := by rw [triplets_card]
 
 /-- FS-T07: overlap spectrum of ordered distinct pairs, twice the unordered counts. -/
@@ -112,6 +116,5 @@ theorem overlap_spectrum :
   · exact overlap_count 1 84 (fun a ha => by simpa using overlap_row a ha 1 (by decide))
   · exact overlap_count 0 56 (fun a ha => by simpa using overlap_row a ha 0 (by decide))
   · rw [Finset.offDiag_card, triplets_card]
-    norm_num
 
 end FieldSpaceCheck
