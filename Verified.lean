@@ -1,5 +1,8 @@
 import Mathlib
 
+set_option maxRecDepth 100000
+set_option maxHeartbeats 8000000
+
 /-!
 # Independent check of the FieldSpace structural theorems
 
@@ -25,16 +28,16 @@ def isScalar (s : Sector) : Bool := !(s = E) && !isGauge s
 def triplets : Finset (Finset Sector) := Finset.univ.powersetCard 3
 
 /-- FS-T01: there are 165 triplets. -/
-theorem triplets_card : triplets.card = 165 := by native_decide
+theorem triplets_card : triplets.card = 165 := by decide +kernel
 
 /-- FS-T02: every sector lies in exactly 45 triplets. -/
 theorem sector_incidence (s : Sector) : (triplets.filter (s ∈ ·)).card = 45 := by
-  revert s; native_decide
+  revert s; decide +kernel
 
 /-- FS-T03: every pair of distinct sectors lies in exactly 9 triplets. -/
 theorem pair_incidence (s t : Sector) (h : s ≠ t) :
     (triplets.filter (fun x => s ∈ x ∧ t ∈ x)).card = 9 := by
-  revert s t; native_decide
+  revert s t; decide +kernel
 
 /-- Kind profile of a triplet: (has gravity, number of gauge sectors, number of scalars). -/
 def profile (x : Finset Sector) : Bool × ℕ × ℕ :=
@@ -48,13 +51,13 @@ theorem class_counts :
     (triplets.filter (profile · = (true, 1, 1))).card = 16 ∧
     (triplets.filter (profile · = (false, 2, 1))).card = 8 ∧
     (triplets.filter (profile · = (true, 2, 0))).card = 1 := by
-  native_decide
+  decide +kernel
 
 /-- The six classes exhaust the atlas. -/
 theorem classes_exhaustive : ∀ x ∈ triplets, profile x ∈
     ({(false, 0, 3), (false, 1, 2), (true, 0, 2), (true, 1, 1), (false, 2, 1), (true, 2, 0)} :
       Finset (Bool × ℕ × ℕ)) := by
-  native_decide
+  decide +kernel
 
 /-- Expected statement count of a fully populated block under the source grammar:
 one Einstein equation if `E` is present, two statements (dynamics + Bianchi) per gauge
@@ -68,7 +71,7 @@ theorem statement_inventory :
     (∑ x ∈ triplets, (x.filter (isGauge ·)).card) = 90 ∧
     (∑ x ∈ triplets, (x.filter (isScalar ·)).card) = 360 ∧
     (∑ x ∈ triplets, statements x) = 585 := by
-  native_decide
+  decide +kernel
 
 /-- FS-T06: deleting a set `D` of `k` sectors leaves `C(11-k,3)` triplets, all of which
 are exactly the triplets of the remaining sectors (closure under vertex deletion). -/
@@ -88,7 +91,7 @@ theorem overlap_spectrum :
     (pairs.filter (fun p => (p.1 ∩ p.2).card = 1)).card = 2 * 6930 ∧
     (pairs.filter (fun p => (p.1 ∩ p.2).card = 0)).card = 2 * 4620 ∧
     pairs.card = 2 * 13530 := by
-  native_decide
+  decide +kernel
 
 /-! ## Candidate law FS-C02 (master-action reciprocity), in its simplest form
 

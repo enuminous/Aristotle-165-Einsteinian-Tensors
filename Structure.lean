@@ -1,5 +1,8 @@
 import Mathlib
 
+set_option maxRecDepth 100000
+set_option maxHeartbeats 8000000
+
 namespace FieldSpace
 
 /-- Number of named sectors in the proposed FieldSpace atlas. -/
@@ -7,24 +10,24 @@ def sectorCount : Nat := 11
 
 /-- Complete rank-3 atlas size. -/
 theorem triplet_count : Nat.choose 11 3 = 165 := by
-  native_decide
+  decide +kernel
 
 /-- Number of triplets containing a fixed sector. -/
 theorem fixed_sector_incidence : Nat.choose 10 2 = 45 := by
-  native_decide
+  decide +kernel
 
 /-- Number of triplets containing a fixed unordered sector pair. -/
 theorem fixed_pair_incidence : Nat.choose 9 1 = 9 := by
-  native_decide
+  decide +kernel
 
 theorem scalar_triples : Nat.choose 8 3 = 56 := by
-  native_decide
+  decide +kernel
 
 theorem one_gauge_two_scalars : 2 * Nat.choose 8 2 = 56 := by
-  native_decide
+  decide +kernel
 
 theorem gravity_two_scalars : Nat.choose 8 2 = 28 := by
-  native_decide
+  decide +kernel
 
 theorem gravity_gauge_scalar : 2 * 8 = 16 := by
   norm_num
@@ -48,6 +51,6 @@ theorem statement_inventory :
 /-- Pair-of-triplet overlap counts sum to all unordered pairs of distinct triplets. -/
 theorem overlap_spectrum :
     1980 + 6930 + 4620 = Nat.choose 165 2 := by
-  native_decide
+  decide +kernel
 
 end FieldSpace

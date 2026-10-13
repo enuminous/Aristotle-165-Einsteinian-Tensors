@@ -3,7 +3,7 @@
 Use the committed toolchain and dependency manifest. The workflow restores
 applicable caches, builds the configured library, and audits every safe
 declaration defined in the project modules listed in `Audit.lean`, including
-private declarations. The permitted axioms are `propext`, `Classical.choice`, and `Quot.sound`, plus `Lean.ofReduceBool` for the existing native finite enumerations.
+private declarations. The permitted axioms are `propext`, `Classical.choice`, and `Quot.sound`.
 
 ```sh
 lake exe cache get
@@ -14,7 +14,7 @@ python3 scripts/test_axiom_audit.py
 
 The rejection controls inject a public axiom, private axiom and placeholder proof
 and require the audit to fail for the intended reason.
-Native evaluation remains an explicit trust dependency of the existing enumerations.
+Native proof evaluation is rejected. The existing finite enumeration statements now use `decide +kernel`, so no native compiler axiom is admitted. No theorem statement or hypothesis was changed.
 
 The successful job summary records the exact commit and workflow run. Source
 declarations and hypotheses determine the mathematical scope; a successful

@@ -1,4 +1,4 @@
-"""Ensure the audit rejects public/private axioms, placeholders, and placeholder proofs."""
+"""Ensure the audit rejects public/private axioms, placeholders, and native proofs."""
 from pathlib import Path
 import subprocess
 import tempfile
@@ -10,6 +10,7 @@ cases = [
     ("public axiom", "axiom AuditProbe.auditProbe : False", "AuditProbe.auditProbe"),
     ("private axiom", "namespace AuditProbe\nprivate axiom auditProbe : False\nend AuditProbe", "auditProbe"),
     ("placeholder", "theorem AuditProbe.auditProbe : False := by sorry", "sorryAx"),
+    ("native proof", "theorem AuditProbe.auditProbe : (1 : Nat) = 1 := by native_decide", "Lean.ofReduceBool"),
 ]
 with tempfile.TemporaryDirectory(prefix="AuditProbe", dir=".") as directory:
     probe = Path(directory) / "Probe.lean"
