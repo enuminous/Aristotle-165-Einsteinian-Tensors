@@ -91,7 +91,13 @@ theorem overlap_spectrum :
     (pairs.filter (fun p => (p.1 ∩ p.2).card = 1)).card = 2 * 6930 ∧
     (pairs.filter (fun p => (p.1 ∩ p.2).card = 0)).card = 2 * 4620 ∧
     pairs.card = 2 * 13530 := by
-  decide +kernel
+  dsimp only
+  refine ⟨?_, ?_, ?_, ?_⟩
+  · decide +kernel
+  · decide +kernel
+  · decide +kernel
+  · rw [Finset.offDiag_card, triplets_card]
+    norm_num
 
 /-! ## Candidate law FS-C02 (master-action reciprocity), in its simplest form
 

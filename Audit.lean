@@ -12,6 +12,7 @@ run_cmd do
   let env ← getEnv
   let modules : Array Name := #[`Structure, `Coupling, `Ablations, `Verified, `Main]
   let allowed : Array Name := #[``propext, ``Classical.choice, ``Quot.sound]
+  let mut axiomState : CollectAxioms.State := {}
   let mut count := 0
   let mut theoremCount := 0
   for (name, info) in env.constants.toList do
@@ -22,7 +23,9 @@ run_cmd do
       count := count + 1
       if info matches .thmInfo _ then
         theoremCount := theoremCount + 1
-      for ax in (← collectAxioms name) do
+      let (_, nextState) := ((CollectAxioms.collect name).run env).run axiomState
+      axiomState := nextState
+      for ax in axiomState.axioms do
         unless allowed.contains ax do
           throwError "Unapproved axiom {ax} used by {name}"
   if count == 0 then
