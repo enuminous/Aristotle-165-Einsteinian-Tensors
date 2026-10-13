@@ -14,14 +14,17 @@ python3 scripts/test_axiom_audit.py
 
 The rejection controls inject a public axiom, private axiom and placeholder proof
 and require the audit to fail for the intended reason.
-Native proof evaluation is rejected. The existing finite enumeration statements now use `decide +kernel`, so no native compiler axiom is admitted. No theorem statement or hypothesis was changed.
+Native proof evaluation is rejected. The existing finite enumeration statements now use kernel-checked `decide` / `decide +kernel` or symbolic counting proofs, so no native compiler axiom is admitted. No theorem statement or hypothesis was changed.
 
 The successful job summary records the exact commit and workflow run. Source
 declarations and hypotheses determine the mathematical scope; a successful
 build does not validate a broader empirical or scientific interpretation.
 
-The finite overlap proof sums 165 small fibers instead of reducing a materialized
-27,060-pair product. The project library sets Lean's thread stack to 64 MiB via
+The overlap proof counts intersections and complements by a bijection and sums
+the 165 equal fibers instead of reducing a materialized 27,060-pair product.
+Class exhaustiveness follows from the per-sector partition and the gauge-count
+bound; the six class cardinalities are checked separately.
+The project library sets Lean's thread stack to 64 MiB via
 `-s65536` for the pinned 4.28 toolchain; this addresses an observed stack overflow
 without changing the statements, toolchain, dependencies, or permitted axioms.
 
