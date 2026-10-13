@@ -1,5 +1,5 @@
 import Mathlib
-import RequestProject.Upstream.Structure
+import Structure
 
 namespace FieldSpace
 
