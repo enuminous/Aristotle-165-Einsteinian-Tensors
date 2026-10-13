@@ -83,8 +83,25 @@ theorem ablation (D : Finset Sector) :
   rw [this, Finset.card_powersetCard, Finset.card_sdiff_of_subset (Finset.subset_univ _)]
   rfl
 
-/-- FS-T07: overlap spectrum of unordered pairs of distinct triplets
-(sharing 2 / 1 / 0 sectors): `1980 + 6930 + 4620 = 13530`. -/
+/-- Count ordered overlaps by summing small fibers, avoiding a giant kernel
+reduction over the materialized 27,060-element off-diagonal product. -/
+private theorem overlap_count (k count : ℕ)
+    (hrow : ∀ a ∈ triplets,
+      (triplets.filter (fun b => a ≠ b ∧ (a ∩ b).card = k)).card = count) :
+    (triplets.offDiag.filter (fun p => (p.1 ∩ p.2).card = k)).card = 165 * count := by
+  have hoff : triplets.offDiag =
+      (triplets ×ˢ triplets).filter (fun p => p.1 ≠ p.2) := by
+    ext p
+    simp [Finset.mem_offDiag, and_assoc]
+  calc
+    _ = ∑ a ∈ triplets,
+        (triplets.filter (fun b => a ≠ b ∧ (a ∩ b).card = k)).card := by
+      simp [hoff, Finset.filter_filter, Finset.card_eq_sum_ones,
+        Finset.sum_filter, Finset.sum_product]
+    _ = triplets.card * count := by simp [hrow]
+    _ = 165 * count := by rw [triplets_card]
+
+/-- FS-T07: overlap spectrum of ordered distinct pairs, twice the unordered counts. -/
 theorem overlap_spectrum :
     let pairs := triplets.offDiag
     (pairs.filter (fun p => (p.1 ∩ p.2).card = 2)).card = 2 * 1980 ∧
@@ -93,9 +110,9 @@ theorem overlap_spectrum :
     pairs.card = 2 * 13530 := by
   dsimp only
   refine ⟨?_, ?_, ?_, ?_⟩
-  · decide +kernel
-  · decide +kernel
-  · decide +kernel
+  · exact overlap_count 2 24 (by decide +kernel)
+  · exact overlap_count 1 84 (by decide +kernel)
+  · exact overlap_count 0 56 (by decide +kernel)
   · rw [Finset.offDiag_card, triplets_card]
     norm_num
 
