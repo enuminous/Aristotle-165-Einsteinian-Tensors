@@ -3,6 +3,13 @@ import Structure
 import Coupling
 import Ablations
 import Verified
+import Verified.Sectors
+import Verified.Incidence
+import Verified.Classes
+import Verified.Inventory
+import Verified.Ablation
+import Verified.Overlaps
+import Verified.Reciprocity
 import Main
 
 /-! Audit every safe declaration defined in the listed project modules. -/
@@ -10,7 +17,7 @@ import Main
 open Lean in
 run_cmd do
   let env ← getEnv
-  let modules : Array Name := #[`Structure, `Coupling, `Ablations, `Verified, `Main]
+  let modules : Array Name := #[`Structure, `Coupling, `Ablations, `Verified, `Verified.Sectors, `Verified.Incidence, `Verified.Classes, `Verified.Inventory, `Verified.Ablation, `Verified.Overlaps, `Verified.Reciprocity, `Main]
   let allowed : Array Name := #[``propext, ``Classical.choice, ``Quot.sound]
   let mut axiomState : CollectAxioms.State := {}
   let mut count := 0

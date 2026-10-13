@@ -24,3 +24,8 @@ The finite overlap proof sums 165 small fibers instead of reducing a materialize
 27,060-pair product. The project library sets Lean's thread stack to 64 MiB via
 `-s65536` for the pinned 4.28 toolchain; this addresses an observed stack overflow
 without changing the statements, toolchain, dependencies, or permitted axioms.
+
+`Verified.lean` remains the public import. Its declarations are split into a
+sequential chain of `Verified.*` modules to bound peak compiler memory and expose
+which check is running. The audit includes every module; theorem names and
+statements are unchanged.
